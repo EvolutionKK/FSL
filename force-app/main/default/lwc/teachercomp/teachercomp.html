@@ -1,0 +1,71 @@
+<template>
+
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-large-size_6-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+            <template if:true={classList}>
+                <select class="slds-select" onchange={selclass}>
+                    <option label="None"></option>
+                    <template for:each={classList} for:item="cls">
+                        <option label={cls.Name} key={cls.Id} value={cls.Id}></option>
+                    </template>
+                </select>
+        </template>        
+    </div>
+        <div class="slds-col slds-large-size_3-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+            <lightning-input type="checkbox" label="Tabular" value="tabbox" class="tabbox" onchange={showtab}></lightning-input>
+        </div>
+        <div class="slds-col slds-large-size_3-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+            <lightning-input type="checkbox" label="Graphical" value="graph" class="graphbox" onchange={showgraph}></lightning-input>
+        </div>
+      </div>
+
+      <template if:true={openModal}>
+        <section aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container ">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_small">Enter Number of Rows</h2>
+                    <lightning-icon class="slds-modal__close" icon-name="utility:close" size="small" onclick={closeModal}></lightning-icon>
+                </header>
+                <div class="slds-modal__content">
+                    <div class="slds-p-around_small">
+                        <lightning-input label="No. Of Rows" data-id="row" ></lightning-input>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button onclick={closeModalandsubmit} label="Submit"></lightning-button>
+                    <lightning-button variant="brand" label="Cancel" onclick={closeModal} class="slds-p-around_x-small"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <div class="slds-grid slds-wrap">
+        <template if:true={graphical}>
+            <div class="slds-col slds-large-size_6-of-12 slds-medium-size_1-of-12 slds-size_1-of-12" style="border: solid; width: 10rem; margin-top: 1rem;">
+                <template for:each={arr} for:item="item">
+                    <div class="slds-grid slds-wrap" key={item.num} >
+                        <div class="slds-col slds-large-size_3-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                            <div class="deev" style="margin-right: 3rem; margin-left: 0.5rem;"></div>
+                        </div>
+                        <div class="slds-col slds-large-size_3-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                            <div class="deev" style="margin-left: 3rem;"></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+            <template if:true={tabular}>
+                <div style="height: 300px;">
+                    <lightning-datatable
+                        key-field="id"
+                        data={stdlist}
+                        columns={columns}
+                        onrowaction={handlerowaction}>
+                    </lightning-datatable>
+                </div>
+            </template>                                
+        </div>
+    </div>
+</template>
